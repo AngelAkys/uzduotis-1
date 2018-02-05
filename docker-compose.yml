@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    image: nginx:latest
+    volumes:
+      - "./src:/src:rw"
+      - "./site.conf:/etc/nginx/conf.d/0site.conf:rw"
+    ports:
+      - "1997:80"
+  php:
+    image: kt61/slamstas:php-comp-pdo
+    volumes:
+      - "/src:/src:rw"
+  db:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=baze
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./src/db/:/var/lib/mysql:rw"
+
